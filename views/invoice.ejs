@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>
+        <%= title %>
+    </title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.css">
+
+</head>
+
+<body style="background-color: #000;">
+
+    <% if(error){ %>
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <%=error.message%>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <%}%>
+            <% if(msg){ %>
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    <%=msg%>
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+                </div>
+                <%}%>
+                    <div class="container bg-secondary mt-3 mb-3 p-0">
+                        <form method="POST" action="/create" autocomplete="off">
+                            <div class="container upperContainer mt-2 mb-0 pt-4 ">
+                                <h3 class="h3 text-center text-light  mb-4">Create Invoice </h3>
+                                    <a href="../logout" type="button" class="btn btn-sm btn-warning delete float-right">Sign Out</a></h3>
+                                <div class="row form-group">
+                                    <div class="col-md-6">
+                                        <div class="col-sm-6">
+                                            <label for="validationServer01">Client Name</label>
+                                            <input type="text" name="clientName" class="form-control-sm" placeholder="Client Name *">
+                                            <label for="validationServer01">Client Address</label>
+                                            <textarea name="clientAddress" class="form-control-sm client" id="client" placeholder="Client Address *"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="col-sm-4 ml-3">
+                                            <input type="text" name="invoiceNumber" class="form-control-sm mt-2" placeholder="Invoice Number *">
+                                            <input type="text" id="picker" name="invoiceDate" class="form-control-sm mt-2" placeholder="Payment Due Date *">
+                                        </div>
+                                    </div>
+                                </div>
+                                <table class="table table-color" id="tbUser">
+                                    <thead>
+                                        <tr class="text-light">
+                                            <th scope="col" style="width:2%" class="text-center">#</th>
+                                            <th scope="col" style="width:43%" class="text-center">Item Name *</th>
+                                            <th scope="col" style="width:17%" class="text-center">Description</th>
+                                            <th scope="col" style="width:13%" class="text-center">Price/Unit*</th>
+                                            <th scope="col" style="width:14%" class="text-center">Quantity *</th>
+                                            <th scope="col" style="width:11%" class="text-center">Price *</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="form-group">
+                                        <tr class="item-row">
+                                            <td class="text-center text-light">1</td>
+                                            <td><input type="text" name="itemName" class="form-control"></td>
+                                            <td><input type="text" name="description" class="form-control"></td>
+                                            <td><input type="text" class="cost text-right form-control" name="itemPrice"></td>
+                                            <td><input type="text" class="qty text-right form-control" name="qty"></td>
+                                            <td>
+                                                <textarea class="price notext text-center" id="price" name="Price" readonly>0</textarea>
+                                            </td>
+                                        </tr>
+                                        <tr id="hiderow">
+                                            <td colspan="2"><a class="btn btn-light addrowbtn btn-sm" id="addrow" href="javascript:;" title="Add a row">Add a row</a></td>
+                                        </tr>
+
+                                    </tbody>
+                                    <tr>
+                                        <td colspan="5" class="text-right text-light text2">Subtotal</td>
+                                        <td>
+                                            <textarea id="subtotal" class="form-control-sm notext text-center" name="subTotal" readonly>0</textarea>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="5" class="text-right text-light p-3">Tax @ 18%</td>
+                                        <td>
+                                            <textarea id="gst" class="form-control-sm text-center text2" name="gst" readonly>0.00</textarea>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="5" class="text-right text-light p-3 ">Total</td>
+                                        <td>
+                                            <textarea id="total" class="form-control-sm notext text-center text2" name="totalAmount" readonly>0</textarea>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="5" class="text-right text-light p-3 ">Advance</td>
+
+                                        <td><textarea id="paid" class="form-control-sm text-center text2" name="advance">0.00</textarea></td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="5" class="total-line text-light balance text-right p-3 ">Balance Due</td>
+                                        <td>
+                                            <textarea class="due form-control-sm text-center notext text2" name="balancedue" readonly>0</textarea>
+                                        </td>
+                                    </tr>
+                                </table>
+                                <button type="submit" class="btn btn-success float-md-right mt-2 " id="submit ">Submit</button>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="text-center text-light jumbotron mt-5 mb-0 rounded-0 footr ">
+                        Copyright &copy; My Invoice App 2020</div>
+
+                    <script type='text/javascript' src='https://code.jquery.com/jquery-3.5.1.min.js'></script>
+                    <script src="/javascript/inv.js "></script>
+                    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js " integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj " crossorigin="anonymous "></script>
+                    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js " integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN " crossorigin="anonymous "></script>
+                    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js " integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV " crossorigin="anonymous "></script>
+                    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js"></script>
+                    <script>
+                        $('#picker').datetimepicker({
+                            timepicker: false,
+                            datepicker: true,
+                            format: 'd-m-y'
+                        });
+                    </script>
+</body>
+
+</html>
