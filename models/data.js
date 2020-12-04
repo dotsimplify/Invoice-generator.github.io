@@ -1,6 +1,6 @@
 var mongoose = require("mongoose");
 var Schema = new mongoose.Schema();
-mongoose.connect("process.env.port || mongodb://localhost:27017/database", {
+mongoose.connect(process.env.port || "mongodb://localhost:27017/database", {
   useNewUrlParser: true,
   useUnifiedTopology: true,
   useFindAndModify: false,
@@ -9,7 +9,7 @@ mongoose.connect("process.env.port || mongodb://localhost:27017/database", {
 mongoose.connection.on("connected", () => {
   console.log("mongo Db connected");
 });
-
+// uOF7TY7b3OfVQbYD
 var userSchema = new mongoose.Schema({
   email: {
     type: String,
